@@ -1,5 +1,6 @@
 const { dotenv } = require("dotenv").config();
 const { Telegraf } = require("telegraf");
+const axios = require("axios");
 
 const bot = new Telegraf(process.env.TOKEN);
 
@@ -15,6 +16,7 @@ bot.help((ctx) => {
     /start
     /test
     /help
+    /dolar
     `
   );
 });
@@ -34,6 +36,25 @@ bot.command(["mycommand", "MyCommand", "test", "Test"], (ctx) => {
 
 bot.hears("computer", (ctx) => {
   ctx.reply("Sí, estoy vendiendo una computadora");
+});
+
+const getAll = async (url, ctx) => {
+  try {
+    let resp = await axios.get(url),
+      dolartoday = await resp.data.USD.transferencia,
+      BCV = await resp.data.USD.sicad2;
+    ctx.reply(`
+    @DolarToday = ${dolartoday} bs.
+    @BCV = ${BCV} bs.`);
+  } catch (error) {
+    let message = error.statusText || "Ocurrio un error";
+    ctx.reply(message);
+  }
+};
+
+bot.command("dolar", (ctx) => {
+  getAll("https://s3.amazonaws.com/dolartoday/data.json", ctx);
+  console.log(ctx.message.text);
 });
 
 /** Escucha todo el texto que se escribe en el chat */
