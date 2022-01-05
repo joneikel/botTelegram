@@ -1,8 +1,16 @@
 const { dotenv } = require("dotenv").config();
+const express = require("express");
 const axios = require("axios");
 const { Telegraf } = require("telegraf");
-
+const app = express();
 const bot = new Telegraf(process.env.TOKEN);
+
+const port = process.env.PORT || 3000;
+const host = process.env.HOST;
+
+app.listen(port, host, () => {
+  console.log(`Servidor corriendo en el puerto: ${port}`);
+});
 
 setInterval(() => {
   console.log("test");
