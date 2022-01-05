@@ -1,6 +1,6 @@
 const { dotenv } = require("dotenv").config();
-const { Telegraf } = require("telegraf");
 const axios = require("axios");
+const { Telegraf } = require("telegraf");
 
 const bot = new Telegraf(process.env.TOKEN);
 
