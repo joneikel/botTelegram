@@ -6,7 +6,7 @@ const bot = new Telegraf(process.env.TOKEN);
 
 setInterval(() => {
   console.log("test");
-}, 3600000);
+}, 1000);
 
 bot.start((ctx) => {
   ctx.reply(`Welcome ${ctx.from.first_name}`);
